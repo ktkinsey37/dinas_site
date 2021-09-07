@@ -1,0 +1,36 @@
+merchandise:
+
+id
+name
+description
+price
+weight
+size
+color
+for sale
+held
+out of stock
+image_url
+
+animal:
+
+id
+name
+species
+morph
+color pattern
+colors
+parent 1
+parent 2
+weight
+size
+for sale
+held
+out of stock
+image_url
+
+user:
+
+username
+password
+privilege
