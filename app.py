@@ -4,9 +4,9 @@ from flask_wtf import FlaskForm
 from flask import Flask, render_template, request, jsonify, flash, redirect, session, g
 import random, requests
 from flask_debugtoolbar import DebugToolbarExtension
-from datetime import datetime, timedelta
-from sqlalchemy.exc import IntegrityError
-from models import db, connect_db, User, Item
+from datetime import datetime # timedelta
+# from sqlalchemy.exc import IntegrityError
+from models import db, connect_db, User, Item, Animal
 
 app = Flask(__name__)
 
@@ -17,8 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 
 print(app.config['SQLALCHEMY_DATABASE_URI'])
 
-google_api_key = os.environ.get('google_api_key', False)
-api_key = os.environ.get('api_key', '2963e96aecde4c5093c215021211406')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -28,11 +26,6 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 
 db.create_all()
-
-google_api = google_api_key
-api_key = api_key
-base_url = 'http://api.weatherapi.com/v1'
-
 
 ########################### USER ROUTES ############################
 @app.before_request
@@ -157,6 +150,8 @@ def add_admin():
 def homepage():
     """Show homepage."""
 
-    popular_locations=Location.query.filter_by(user_id=admin.id).limit(25).all()
+    # popular_locations=Location.query.filter_by(user_id=admin.id).limit(25).all()
 
-    return render_template('home.html', popular_locations=popular_locations, form=form)
+    return render_template('home.html') # popular_locations=popular_locations, form=form)
+
+########################### ITEM/ANIMAL ROUTES ############################

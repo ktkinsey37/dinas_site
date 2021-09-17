@@ -4,7 +4,6 @@ from datetime import date
 
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-from geoalchemy2 import Geometry
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
@@ -241,6 +240,46 @@ class Animal(db.Model):
                 db.Boolean,
                 nullable=False,
                 default=False
+    )
+
+    def __repr__(self):
+        return f"<Animal #{self.id}: {self.name}, {self.morph}. Parents: {self.parent_one}, {self.parent_two}>"
+
+class Event(db.Model):
+    """An event for the website."""
+
+    __tablename__ = 'events'
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        nullable=False
+    )
+
+    title = db.Column(
+            db.Text,
+            nullable=False,
+            unique=True
+    )
+
+    description = db.Column(
+                db.Text,
+                default=""
+    )
+
+    starttime = db.Column(
+                db.Text,
+                nullable=False,
+    )
+
+    endtime = db.Column(
+                db.Text,
+                nullable=False,
+    )
+
+    image_url = db.Column(
+                db.Text,
+                default=""
     )
 
     def __repr__(self):
