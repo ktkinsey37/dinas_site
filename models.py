@@ -98,7 +98,6 @@ class Item(db.Model):
                 default=""
     )
 
-    # Have to discuss how we wanna store this. As a list? Or just as a string/list?
     color = db.Column(
                 db.Text,
                 nullable=False,
@@ -117,6 +116,7 @@ class Item(db.Model):
     image_url = db.Column(
                 db.Text,
                 default=""
+                # NEED A DEFAULT IMAGE
     )
 
     price = db.Column(
@@ -182,7 +182,8 @@ class Animal(db.Model):
                 nullable=False,
     )
 
-    # Have to discuss how we wanna store this. As a list? Or just as a string/list?
+    # Store as alphabetized list of strings stringified together, then regex'd back out on /nbsp or w/e
+
     colors = db.Column(
                 db.Text,
                 nullable=False,
