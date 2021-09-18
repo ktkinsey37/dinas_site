@@ -6,7 +6,7 @@ import random, requests
 from flask_debugtoolbar import DebugToolbarExtension
 from datetime import datetime # timedelta
 # from sqlalchemy.exc import IntegrityError
-from models import db, connect_db, User, Item, Animal
+from models import db, connect_db, User, Item, Animal, Event
 
 app = Flask(__name__)
 
@@ -108,43 +108,43 @@ def logout():
     session.pop(CURR_USER_KEY)
     return redirect('/', code=302)
 
-@app.route('/add_admin', methods=["GET", "POST"])
-def add_admin():
+# @app.route('/add_admin', methods=["GET", "POST"])
+# def add_admin():
 
-    try:
+#     try:
         
-        if g.user.authority == 'admin':
+#         if g.user.authority == 'admin':
 
 
-            form = AddAdmin()
+#             form = AddAdmin()
 
                 
-            if form.validate_on_submit():
+#             if form.validate_on_submit():
 
-                print("FORM VALIDATED")
+#                 print("FORM VALIDATED")
 
                 
               
-                new_admin = User.query.filter_by(username=form.data['name']).first()
-                new_admin.authority = 'admin'
+#                 new_admin = User.query.filter_by(username=form.data['name']).first()
+#                 new_admin.authority = 'admin'
 
 
-                db.session.add(new_admin)
-                db.session.commit()
+#                 db.session.add(new_admin)
+#                 db.session.commit()
 
-                return redirect('/', code=302)
+#                 return redirect('/', code=302)
             
-            else:
-                flash("There was an error processing the form.", 'danger')
-                return render_template('add-admin.html', form=form)
+#             else:
+#                 flash("There was an error processing the form.", 'danger')
+#                 return render_template('add-admin.html', form=form)
 
-        else:
-            flash('You do not have the proper authority to visit this page.')
-            return redirect('/', code=302)
+#         else:
+#             flash('You do not have the proper authority to visit this page.')
+#             return redirect('/', code=302)
 
-    except (AttributeError):
-        flash('There is no user currently signed in')
-        return redirect('/', code=302)
+#     except (AttributeError):
+#         flash('There is no user currently signed in')
+#         return redirect('/', code=302)
 
 @app.route("/")
 def homepage():
@@ -154,4 +154,47 @@ def homepage():
 
     return render_template('home.html') # popular_locations=popular_locations, form=form)
 
-########################### ITEM/ANIMAL ROUTES ############################
+########################### SHOP ITEM/ANIMAL ROUTES ############################
+
+@app.route("/shop")
+def shop_homepage():
+    """Renders the shop's homepage."""
+
+    items = Item.query.limit(25).all() #How do you want to filter the first items that come up?
+    animals = Animal.query.limit(5).all()
+    events = Event.query.all()
+    
+    return True
+
+@app.route("/items")
+def items_homepage():
+    """Renders the shop's homepage."""
+
+    items = Item.query.limit(25).all() #How do you want to filter the first items that come up?
+    animals = Animal.query.limit(5).all()
+    events = Event.query.all()
+    
+    return True
+
+@app.route('/items/<item_id>')
+def item(item_id):
+    """Show a location and its details."""
+
+    item = Item.query.get_or_404(item_id)
+
+    return render_template('location-view.html', item=item)
+
+@app.route('/animals')
+def animals_homepage():
+
+    animals = Animal.query.limit(10).all()
+
+    return True
+
+@app.route('/animals/<animal_id>')
+def location_show(location_id):
+    """Show a location and its details."""
+
+    location = Location.query.get_or_404(location_id)
+
+    return render_template('location-view.html', location=location)

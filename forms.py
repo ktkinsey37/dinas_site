@@ -65,37 +65,3 @@ class AnimalEditForm(FlaskForm):
     image_url = StringField('(Optional) Image URL', render_kw={"placeholder": "Eg: Indian Creek"})
     description = TextAreaField('Brief description of the area')
     env = RadioField('Climbing Environment', choices=[('sand','Sandstone'), ('alp','Alpine'), ('none', 'Neither')], validators=[DataRequired()])
-
-
-class BackcastEditForm(FlaskForm):
-    """Form for editing saved backcasts."""
-
-    user_report = TextAreaField('User report')
-
-class CustomBackcastForm(FlaskForm):
-    """Form for creating custom backcasts."""
-
-    latitude = FloatField('Latitude:', validators=[DataRequired()])
-    longitude = FloatField('Longitude:', validators=[DataRequired()])
-    env = RadioField('Climbing Environment', choices=[('sand','Sandstone'), ('alp','Alpine'), ('none', 'Neither')], validators=[DataRequired()])
-
-class UserAddForm(FlaskForm):
-    """Form for adding users."""
-
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('E-mail', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-
-class LoginForm(FlaskForm):
-    """Login form."""
-
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-
-class EditUserProfileForm(FlaskForm):
-    """Form for editing user profile."""
-
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('E-mail', validators=[DataRequired(), Email()])
-    bio = StringField('(Optional) Bio')
-    password = StringField('Optional for now Password')
